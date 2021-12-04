@@ -64,7 +64,7 @@ Apply it with:
 kubectl apply -f cluster.yaml
 ```
 
-Observe provisioning proces with:
+Observe provisioning process with:
 ```
 kubectl get innodbcluster --watch  --namespace sql-cluster
 ```
@@ -89,6 +89,7 @@ kubectl port-forward service/mycluster mysql  --namespace sql-cluster
 ![image7.png](images/image7.png)
 
 Now we can access the database using any MySQL client by connecting to root@127.0.0.1:6446 for example in DataGrip client:
+
 ![image8.png](images/image8.png)
 
 ![image9.png](images/image9.png)
@@ -135,7 +136,7 @@ Apply changes with:
 kubectl apply -f cluster.yaml
 ```
 
-Observe scaling proces with:
+Observe scaling process with:
 ```
 kubectl get innodbcluster --watch  --namespace sql-cluster
 ```
