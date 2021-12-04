@@ -79,7 +79,7 @@ You can also observe the state of your cluster in your Kubernetes Dashboard whic
 
 ## 4. Connecting to database cluster and testing 
 
-Our database cluster is current not accessible outside of our Kubernetes cluster. To access it from our local machine we need to use the kubectl port-forward command. We can see that database is exposed on port 6446 by printing information about the service:
+Our database cluster is currently not accessible outside of our Kubernetes cluster. To access it from our local machine we need to use the kubectl port-forward command. We can see that database is exposed on port 6446 by printing information about the service:
 
 ```
 kubectl get service mycluster  --namespace sql-cluster
