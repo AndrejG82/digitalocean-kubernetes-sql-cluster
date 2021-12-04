@@ -21,7 +21,7 @@ Once the cluster is created you can download the cluster configuration file. In 
 Then we can set the KUBECONFIG environment variable and test connection to our cluster by displaying the list of nodes:
 ![image1.png](images/image1.png)
 
-## 2. Install mysql operator
+## 2. Installing mysql operator
 
 We will clone the mysql operator code from offical github repository and install it into our cluster using the helm util.
 ```
@@ -31,7 +31,7 @@ helm install mysql-operator helm/mysql-operator --namespace mysql-operator --cre
 ```
 ![image2.png](images/image2.png)
 
-## 3. Set up the cluster
+## 3. Set up the database cluster
 
 First we create a namespace for our cluster. 
 ```
@@ -77,7 +77,7 @@ You can also observe the state of your cluster in your Kubernetes Dashboard whic
 ![image6.png](images/image6.png)
 
 
-## 4. Connect to database cluster and test it
+## 4. Connecting to database cluster and testing 
 
 Our database cluster is current not accessible outside of our Kubernetes cluster. To access it from our local machine we need to use the kubectl port-forward command. We can see that database is exposed on port 6446 by printing information about the service:
 
@@ -114,7 +114,7 @@ SELECT * from Users;
 
 ![image10.png](images/image10.png)
 
-## 5. Scale the database cluster
+## 5. Scaling the database cluster
 
 If we need to scale database cluster we can simply change the number of instances in our cluster.yml file and apply it again:
 
@@ -146,7 +146,7 @@ kubectl get innodbcluster --watch  --namespace sql-cluster
 Check instances in database metadata tables:
 ![image12.png](images/image12.png)
 
-## 6. Test the resiliancy by deleting one instance
+## 6. Testing the resiliancy
 
 Connect to database again and check which host is currently being used:
 ```sql
