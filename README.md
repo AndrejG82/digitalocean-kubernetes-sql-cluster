@@ -19,7 +19,7 @@ First you need to create a Kubernetes cluster. I recommend using the official Di
 Once the cluster is created you can download the cluster configuration file. In my case the name of the configuration file was k8s-mysql-cluster-kubeconfig.yaml which I downloaded to my local machine into my working directory for this project.
 
 Then we can set the KUBECONFIG environment variable and test connection to our cluster by displaying the list of nodes:
-![IMAGE1.png](images/IMAGE1.png)
+![image1.png](images/image1.png)
 
 ## 2. Install mysql operator
 
@@ -29,7 +29,7 @@ git clone https://github.com/mysql/mysql-operator.git
 cd mysql-operator
 helm install mysql-operator helm/mysql-operator --namespace mysql-operator --create-namespace
 ```
-![IMAGE2.png](images/IMAGE2.png)
+![image2.png](images/image2.png)
 
 ## 3. Set up the cluster
 
@@ -37,13 +37,13 @@ First we create a namespace for our cluster.
 ```
 kubectl create namespace sql-cluster
 ```
-![IMAGE3.png](images/IMAGE3.png)
+![image3.png](images/image3.png)
 
 Then we create a secret to hold our database root password:
 ```
 kubectl create secret generic mypwds --from-literal=rootUser=root --from-literal=rootHost=%         --from-literal=rootPassword="my secret password" --namespace sql-cluster
 ```
-![IMAGE4.png](images/IMAGE4.png)
+![image4.png](images/image4.png)
 
 Then we prepare and apply our mysql cluster definition file (cluster.yaml). We will initially set it to 3 instances:
 ```yaml
@@ -69,12 +69,12 @@ Observe provisioning proces with:
 kubectl get innodbcluster --watch  --namespace sql-cluster
 ```
 
-![IMAGE5.png](images/IMAGE5.png)
+![image5.png](images/image5.png)
 
 It will take about 3 minutes (depending your cluster resources) for all 3 instances to get online.
 
 You can also observe the state of your cluster in your Kubernetes Dashboard which is accessible through the Digital Ocean Kubernetes management panel:
-![IMAGE6.png](images/IMAGE6.png)
+![image6.png](images/image6.png)
 
 
 ## 4. Connect to database cluster and test it
@@ -86,12 +86,12 @@ kubectl get service mycluster  --namespace sql-cluster
 kubectl describe service mycluster  --namespace sql-cluster
 kubectl port-forward service/mycluster mysql  --namespace sql-cluster
 ```
-![IMAGE7.png](images/IMAGE7.png)
+![image7.png](images/image7.png)
 
 Now we can access the database using any MySQL client by connecting to root@127.0.0.1:6446 for example in DataGrip client:
-![IMAGE8.png](images/IMAGE8.png)
+![image8.png](images/image8.png)
 
-![IMAGE9.png](images/IMAGE9.png)
+![image9.png](images/image9.png)
 
 We test the database by creating a simple table on new schema:
 ```sql
@@ -111,7 +111,7 @@ INSERT INTO Users (firstname, lastname ) values ("John", "Doe");
 SELECT * from Users;
 ```
 
-![IMAGE10.png](images/IMAGE10.png)
+![image10.png](images/image10.png)
 
 ## 5. Scale the database cluster
 
@@ -140,10 +140,10 @@ Observe scaling proces with:
 kubectl get innodbcluster --watch  --namespace sql-cluster
 ```
 
-![IMAGE11.png](images/IMAGE11.png)
+![image11.png](images/image11.png)
 
 Check instances in database metadata tables:
-![IMAGE12.png](images/IMAGE12.png)
+![image12.png](images/image12.png)
 
 ## 6. Test the resiliancy by deleting one instance
 
@@ -151,17 +151,17 @@ Connect to database again and check which host is currently being used:
 ```sql
 SHOW VARIABLES WHERE Variable_name = 'hostname'
 ```
-![IMAGE13.png](images/IMAGE13.png)
+![image13.png](images/image13.png)
 
 Delete the pod of this mysql host:
 ```
 kubectl delete -n sql-cluster pod mycluster-0
 ```
-![IMAGE14.png](images/IMAGE14.png)
+![image14.png](images/image14.png)
 
 Check the current host again in the same database session. We see our session has been moved to a new host and our data is still avaiable:
 
-![IMAGE15.png](images/IMAGE15.png)
+![image15.png](images/image15.png)
 
 
 ## 7. Conclusion

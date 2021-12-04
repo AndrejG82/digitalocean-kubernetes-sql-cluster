@@ -5,6 +5,6 @@ metadata:
   namespace: sql-cluster
 spec:
   secretName: mypwds
-  instances: 4
+  instances: 3
   router:
     instances: 1
