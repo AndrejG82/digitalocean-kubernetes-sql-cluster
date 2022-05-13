@@ -169,3 +169,4 @@ Check the current host again in the same database session. We see our session ha
 
 This concludes the basic setup and testing of our MySQL database cluster.
 You can now use this cluster as database backend for your applications in the Kubernetes cluster.
+
